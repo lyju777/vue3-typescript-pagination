@@ -8,7 +8,10 @@ import { RouterView } from 'vue-router';
 
 </script>
 
-<style scoped>
+<style>
+body {
+  margin: 0px;
+}
 
 </style>
 
