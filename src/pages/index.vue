@@ -5,7 +5,9 @@
         <section class="page__container__navigation">
           <Navigation />
         </section>
-        <section class="page__container__notice"></section>
+        <section class="page__container__notice">
+          <Notice />
+        </section>
       </div>
     </BasicLayout>
   </div>
@@ -14,6 +16,7 @@
 <script setup lang="ts">
 import BasicLayout from '@/components/atoms/layout/BasicLayout.vue';
 import Navigation from '@/components/organisms/Navigation.vue';
+import Notice from '@/components/organisms/Notice.vue';
 
 </script>
 
@@ -33,8 +36,8 @@ import Navigation from '@/components/organisms/Navigation.vue';
     justify-content: center;
     align-items: center;
 
-    width: 60vw;
-    height: 61vh;
+    width: 80vw;
+    height: 80vh;
 
     &__navigation {
       width: 20%;
