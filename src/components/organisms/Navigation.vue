@@ -97,7 +97,7 @@ const bottomMenu = computed(()=>{
 
     width: 100%;
     height: calc(86vh - 97px);
-    gap: 50px;
+    gap: 4px;
 
     &__sub-menu{
       display: flex;

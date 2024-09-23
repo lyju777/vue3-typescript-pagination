@@ -21,7 +21,7 @@ const {theme} = toRefs(props)
   align-items: center;
   justify-content: center;
 
-  padding: 20px;
+  padding: 17px;
 
   background-color: $color-white-000;
   border-radius: 24px;

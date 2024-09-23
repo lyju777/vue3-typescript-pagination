@@ -28,24 +28,181 @@
         <span class="label">Skill</span>
       </div>
       <div class="notice__body__list-box">
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
-        <NoticeList />
+        <NoticeList
+          v-for="item in tableData"
+          :key="item.userName"
+          :data="item"
+        />
       </div>
+    </div>
+    <div class="notice__footer">
+      <Pagination :totalPage="totalPage" @send-event="reset" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import NoticeList from '@/components/mocules/List.vue';
+import NoticeList from "@/components/mocules/List.vue";
+import Pagination from "@/components/mocules/common/Pagination.vue";
+import { onMounted, ref, watch } from "vue";
+
+interface List {
+  userName: string;
+  userRole: string;
+  userResumScore: number;
+  userSkillMatch: number;
+  userSkill: string;
+}
+
+const tableData = ref<List[]>([]);
+const selectedPage = ref<number>(1);
+const totalPage = ref<number>(0);
+const totalCount = ref<number | undefined>();
+const limit = ref<number>(10);
+
+const getData = () => {
+   tableData.value = [
+    {
+      userName: "Marco",
+      userRole: "FrontEnd Developer",
+      userResumScore: 89,
+      userSkillMatch: 80,
+      userSkill: "Junior",
+    },
+    {
+      userName: "Jeff",
+      userRole: "BackEnd Developer",
+      userResumScore: 72,
+      userSkillMatch: 65,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Eric",
+      userRole: "User Experience",
+      userResumScore: 90,
+      userSkillMatch: 91,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Merry",
+      userRole: "User Interface",
+      userResumScore: 56,
+      userSkillMatch: 43,
+      userSkill: "Junior",
+    },
+    {
+      userName: "John",
+      userRole: "Product Manager",
+      userResumScore: 100,
+      userSkillMatch: 100,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Max",
+      userRole: "FrontEnd Developer",
+      userResumScore: 100,
+      userSkillMatch: 100,
+      userSkill: "Senior",
+    },
+    {
+      userName: "poloe",
+      userRole: "Product Manager",
+      userResumScore: 80,
+      userSkillMatch: 78,
+      userSkill: "Senior",
+    },
+    {
+      userName: "John",
+      userRole: "BackEnd Developer",
+      userResumScore: 50,
+      userSkillMatch: 50,
+      userSkill: "Junior",
+    },
+    {
+      userName: "Marco",
+      userRole: "FrontEnd Developer",
+      userResumScore: 89,
+      userSkillMatch: 80,
+      userSkill: "Junior",
+    },
+    {
+      userName: "Jeff",
+      userRole: "BackEnd Developer",
+      userResumScore: 72,
+      userSkillMatch: 65,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Eric",
+      userRole: "User Experience",
+      userResumScore: 90,
+      userSkillMatch: 91,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Merry",
+      userRole: "User Interface",
+      userResumScore: 56,
+      userSkillMatch: 43,
+      userSkill: "Junior",
+    },
+    {
+      userName: "John",
+      userRole: "Product Manager",
+      userResumScore: 100,
+      userSkillMatch: 100,
+      userSkill: "Senior",
+    },
+    {
+      userName: "Max",
+      userRole: "FrontEnd Developer",
+      userResumScore: 100,
+      userSkillMatch: 100,
+      userSkill: "Senior",
+    },
+    {
+      userName: "poloe",
+      userRole: "Product Manager",
+      userResumScore: 80,
+      userSkillMatch: 78,
+      userSkill: "Senior",
+    },
+    {
+      userName: "John",
+      userRole: "BackEnd Developer",
+      userResumScore: 50,
+      userSkillMatch: 50,
+      userSkill: "Junior",
+    },
+  ];
+
+  totalCount.value = tableData.value !== undefined ? tableData.value.length : 0;
+  totalPage.value = Math.ceil(totalCount.value / limit.value) !== 0 ? Math.ceil(totalCount.value / limit.value) : 1;
+  tableData.value = disassmble(selectedPage.value -1, tableData.value, limit.value);
+};
+
+onMounted(() => {
+  getData();
+});
+
+const disassmble = (index:number, data:List[], size:number) =>{
+  const res = new Array()
+
+  for(let i = 0; i < data.length; i += size){
+    res.push(data.slice(i, i + size))
+  }
+  return res[index]
+}
+
+const reset =(pageIdx:number)=>{
+  if(pageIdx === 0) selectedPage.value = 1;
+  else selectedPage.value = pageIdx;
+}
+
+watch(selectedPage, () => {
+  getData();
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -146,6 +303,7 @@ import NoticeList from '@/components/mocules/List.vue';
       gap: 12px;
 
       overflow-y: scroll;
+      scrollbar-width: none;
     }
   }
 }
